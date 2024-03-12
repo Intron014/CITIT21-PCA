@@ -1,0 +1,40 @@
+BACI System: BenAri Pascal PCODE Compiler, 12:29  18 Jul 2004
+Source file: \\tsclient\home\Documents\UPM\CITIT21-PCA\Practica05\Eje51\Eje51.pm  Mon Mar 11 12:16:25 2024
+ line  pc
+   1    0  // El proceso A debe ejecutarse antes que el proceso B
+   2    0  // El proceso C debe ejecutarse antes que el proceso D
+   3    0  // El proceso C debe ejecutarse antes que el proceso B
+   4    0  
+   5    0  program Eje51;
+   6    0    VAR s: SEMAPHORE:=0;
+   7    0    VAR s2: SEMAPHORE:=0;
+   8    0  
+   9    0   PROCEDURE A;
+  10    0      BEGIN
+  11    0         writeln ("Soy el proceso A");
+  12    2         signal(s);
+  13    4      END;
+  14    5   PROCEDURE B;
+  15    5      BEGIN
+  16    5         wait(s);
+  17    7         writeln ("Soy el proceso B");
+  18    9      END;
+  19   10   PROCEDURE C;
+  20   10      BEGIN
+  21   10         writeln ("Soy el proceso C");
+  22   12         signal(s);
+  23   14         signal(s2);
+  24   16      END;
+  25   17   PROCEDURE D;
+  26   17      BEGIN
+  27   17         wait(s2);
+  28   19         writeln ("Soy el proceso D");
+  29   21      END;
+  30   22  BEGIN
+  31   29    COBEGIN
+  32   30      A;
+  33   32      C;
+  34   34      D;
+  35   36      B;
+  36   38    COEND;
+  37   39  END.

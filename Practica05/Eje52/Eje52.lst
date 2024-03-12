@@ -1,0 +1,35 @@
+BACI System: BenAri Pascal PCODE Compiler, 12:29  18 Jul 2004
+Source file: \\tsclient\home\Documents\UPM\CITIT21-PCA\Practica05\Eje52\Eje52.pm  Mon Mar 11 12:40:34 2024
+ line  pc
+   1    0  // Si P1 llega a (*1*) antes que P2 a (*2*), P1 esperará a que P2 llegue a (*2*)
+   2    0  // Si P2 llega a (*2*) antes que P1 a (*1*), P2 esperará a que P1 llegue a (*1*)
+   3    0  
+   4    0  program Eje52;
+   5    0    VAR s: SEMAPHORE:=0;
+   6    0    VAR s2: SEMAPHORE:=0;
+   7    0   
+   8    0  PROCEDURE P1;
+   9    0    BEGIN
+  10    0      writeln ("Sentencia 1 de P1");
+  11    2      signal(s2);
+  12    4      wait(s);
+  13    6      (* 1 *)
+  14    6      writeln ("Sentencia 2 de P1");
+  15    8    END;
+  16    9  
+  17    9  PROCEDURE P2;
+  18    9    BEGIN
+  19    9      writeln ("Sentencia 1 de P2");
+  20   11      signal(s);
+  21   13      wait(s2);
+  22   15      (* 2 *)
+  23   15      writeln ("Sentencia 2 de P2");
+  24   17    END;
+  25   18  
+  26   18  BEGIN
+  27   25    COBEGIN
+  28   26      P1;
+  29   28      P2;
+  30   30    COEND
+  31   31  END.
+  32   33  
